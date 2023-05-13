@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+</head>
+<body>
+<h1>Products</h1>
+<a th:href="@{/products/new}">New Product</a>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.id}">Id</td>
+        <td th:text="${product.name}">Name</td>
+        <td th:text="${product.unit}">Price</td>
+        <td>
+            <a th:href="@{/products/{id}/edit(id=${product.id})}">Edit</a>
+            <form th:action="@{/products/{id}(id=${product.id})}" th:method="delete">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</body>
+</html>
