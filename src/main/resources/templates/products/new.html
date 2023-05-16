@@ -5,8 +5,13 @@
 </head>
 <body>
 <section>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/products}">Products</a></li>
+        </ol>
+    </nav>
     <p class="h4 mb-4">New product</p>
-    <form th:replace="products/form :: form(${product}, @{/products}, 'post')"></form>
+    <form th:replace="~{products/form :: form(${product}, @{/products}, 'post')}"></form>
 </section>
 </body>
 </html>

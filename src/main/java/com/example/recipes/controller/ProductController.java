@@ -6,9 +6,11 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/products")
 public class ProductController {
     private final ProductService productService;
 
@@ -17,40 +19,49 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/products")
-    public String findAll(Model model) {
+    @GetMapping
+    public String index(Model model) {
         model.addAttribute("products", productService.findAll());
         return "products/index";
     }
 
-    @GetMapping("/products/new")
-    public String addProduct(Model model) {
+    @GetMapping("/new")
+    public String newAction(Model model) {
         model.addAttribute("product", new Product());
         return "products/new";
     }
 
-    @PostMapping("/products")
-    public String create(@Valid Product product) {
-        productService.save(product);
+    @PostMapping
+    public String create(@Valid Product params, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("product", params);
+            return "products/new";
+        }
+        productService.save(params);
         return "redirect:/products";
     }
 
-    @GetMapping("/products/{id}/edit")
-    public String edit(Model model, @PathVariable int id) {
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable int id, Model model) {
         model.addAttribute("product", productService.findById(id));
         return "products/edit";
     }
 
-    @PutMapping("/products/{id}")
-    public String update(@Valid Product productParams, @PathVariable int id) {
-        Product product = productService.findById(id);
-        product.setName(productParams.getName());
-        product.setUnit(productParams.getUnit());
-        productService.save(product);
+    @PutMapping("/{id}")
+    public String update(@PathVariable int id, @Valid Product params, BindingResult result, Model model) {
+        if (productService.findById(id) == null) {
+            return "redirect:/products";
+        }
+        if (result.hasErrors()) {
+            model.addAttribute("product", params);
+            return "products/edit";
+        }
+        params.setId(id);
+        productService.save(params);
         return "redirect:/products";
     }
 
-    @DeleteMapping("/products/{id}")
+    @DeleteMapping("/{id}")
     public String delete(@PathVariable int id) {
         productService.deleteById(id);
         return "redirect:/products";
