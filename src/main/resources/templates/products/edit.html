@@ -5,11 +5,7 @@
 </head>
 <body>
 <section>
-    <nav>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a th:href="@{/products}">Products</a></li>
-        </ol>
-    </nav>
+    <nav th:replace="~{products/shared :: nav}"></nav>
     <p class="h4 mb-4">Edit product</p>
     <form th:replace="~{products/form :: form(${product}, @{/products/{id}(id=${product.id})}, 'put')}"></form>
 </section>
