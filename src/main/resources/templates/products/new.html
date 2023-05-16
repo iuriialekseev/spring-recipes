@@ -1,27 +1,12 @@
-<!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<!DOCTYPE html>
+<html th:replace="~{base :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Save product</title>
+    <title>New product</title>
 </head>
-
 <body>
-<div class="container">
-    <p class="h4 mb-4">Save product</p>
-    <form action="#" th:action="@{/products}" th:object="${product}" th:method="post">
-        <input type="text" th:field="*{name}" class="form-control mb-4 w-25" placeholder="Name">
-        <input type="text" th:field="*{unit}" class="form-control mb-4 w-25" placeholder="Unit">
-        <button type="submit" class="btn btn-primary col-2">Save</button>
-        <hr>
-        <a th:href="@{/products}">Back to Products</a>
-    </form>
-</div>
+<section>
+    <p class="h4 mb-4">New product</p>
+    <form th:replace="products/form :: form(${product}, @{/products}, 'post')"></form>
+</section>
 </body>
 </html>
-
-
-
