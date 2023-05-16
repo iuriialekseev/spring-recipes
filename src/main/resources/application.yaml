@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/recipes_development
+    username: yuriyalekseyev
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  main:
+    banner-mode: off
+  jpa:
+    show-sql: true
