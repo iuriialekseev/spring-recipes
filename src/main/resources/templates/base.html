@@ -25,7 +25,7 @@
 </nav>
 <div class="container">
     <div class="row">
-        <div th:if="${flash}" th:text="${flash.message}" th:class="${'alert alert-' + flash.flashType}"></div>
+        <div th:if="${flash}" th:text="${flash.message}" th:class="${'alert alert-' + flash.type}"></div>
         <div th:replace="${content}"></div>
     </div>
 </div>

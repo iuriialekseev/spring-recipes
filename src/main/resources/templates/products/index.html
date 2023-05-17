@@ -25,7 +25,7 @@
         <tr th:each="product : ${products}" th:object="${product}">
             <td th:text="*{id}">ID</td>
             <td th:text="*{name}">Name</td>
-            <td th:text="*{unit}">Price</td>
+            <td th:text="*{unit.displayName}">Price</td>
             <td>
                 <a class="btn btn-sm btn-primary" th:href="@{/products/{id}/edit(id=*{id})}">Edit</a>
                 <form class="d-inline" th:action="@{/products/{id}(id=*{id})}" th:method="delete">

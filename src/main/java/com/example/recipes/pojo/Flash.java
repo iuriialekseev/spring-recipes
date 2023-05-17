@@ -16,6 +16,6 @@ public class Flash {
     }
 
     public String getType() {
-        return type.name();
+        return type.toString().toLowerCase();
     }
 }

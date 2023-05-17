@@ -1,7 +1,9 @@
 package com.example.recipes.entity;
 
+import com.example.recipes.enums.ProductUnit;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -15,9 +17,9 @@ public class Product {
     @Size(max = 255)
     private String name;
 
-    @NotBlank
-    @Size(max = 10)
-    private String unit;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private ProductUnit unit;
 
     public int getId() {
         return id;
@@ -35,11 +37,11 @@ public class Product {
         this.name = name;
     }
 
-    public String getUnit() {
+    public ProductUnit getUnit() {
         return unit;
     }
 
-    public void setUnit(String unit) {
+    public void setUnit(ProductUnit unit) {
         this.unit = unit;
     }
 
