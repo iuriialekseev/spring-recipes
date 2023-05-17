@@ -43,20 +43,19 @@ public class ProductController {
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable int id, Model model) {
-        model.addAttribute("product", productService.findById(id));
+        Product product = productService.findById(id);
+        model.addAttribute("product", product);
         return "products/edit";
     }
 
     @PutMapping("/{id}")
     public String update(@PathVariable int id, @Valid Product params, BindingResult result, Model model) {
-        if (productService.findById(id) == null) {
-            return "redirect:/products";
-        }
+        Product product = productService.findById(id);
         if (result.hasErrors()) {
             model.addAttribute("product", params);
             return "products/edit";
         }
-        params.setId(id);
+        params.setId(product.getId());
         productService.save(params);
         return "redirect:/products";
     }
