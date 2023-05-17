@@ -11,22 +11,22 @@
         <input class="form-control w-25"
                id="name"
                placeholder="rice, chicken, tomatoes"
-               th:classappend="${#fields.hasErrors('name')}? 'is-invalid'"
                th:field="*{name}"
+               th:errorclass="is-invalid"
                type="text"
         >
-        <div class="invalid-feedback" th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></div>
+        <div class="invalid-feedback" th:errors="*{name}"></div>
     </div>
     <div class="mb-3">
         <label for="unit">Unit</label>
         <input class="form-control w-25"
                id="unit"
                placeholder="kg, ml, g"
-               th:classappend="${#fields.hasErrors('unit')}? 'is-invalid'"
                th:field="*{unit}"
+               th:errorclass="is-invalid"
                type="text"
         >
-        <div class="invalid-feedback" th:errors="*{unit}" th:if="${#fields.hasErrors('unit')}"></div>
+        <div class="invalid-feedback" th:errors="*{unit}"></div>
     </div>
     <button class="btn btn-sm btn-success" type="submit">Save</button>
 </form>
