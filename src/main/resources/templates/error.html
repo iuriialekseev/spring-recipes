@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html th:replace="~{base :: layout(~{::title}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${reason + ' · HelloRecipe'}"></title>
+</head>
+<body>
+<div class="d-flex align-items-center justify-content-center mt-5">
+    <div class="text-center">
+        <h1 class="display-1 fw-bold" th:text="${status}">404</h1>
+        <p class="fs-3">
+            <span class="text-danger">Oops!</span>
+            <span th:text="${reason}">Page not found.</span>
+        </p>
+        <p class="lead mb-5" th:if="${explanation}" th:text="${explanation}">
+            The page you’re looking for does not exist.
+        </p>
+        <a th:href="@{/static}" class="btn btn-primary">Go home</a>
+    </div>
+</div>
+</body>
+</html>

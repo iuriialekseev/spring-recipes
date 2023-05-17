@@ -1,7 +1,10 @@
 package com.example.recipes.exception;
 
-public class NotFoundException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+public class NotFoundException extends ResponseStatusException {
     public NotFoundException() {
-        super("Resource not found");
+        super(HttpStatus.NOT_FOUND, "Resource not found");
     }
 }
