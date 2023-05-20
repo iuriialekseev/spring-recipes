@@ -14,6 +14,7 @@ public class ProductUniquenessValidator implements ConstraintValidator<ProductUn
     @Override
     public boolean isValid(Product product, ConstraintValidatorContext constraintValidatorContext) {
         if (product == null || productRepository == null) return true;
-        return productRepository.findByNameAndUnit(product.getName(), product.getUnit()) == null;
+        Product existingProduct = productRepository.findByNameAndUnit(product.getName(), product.getUnit());
+        return existingProduct == null || existingProduct.getId() == product.getId();
     }
 }
