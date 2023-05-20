@@ -1,5 +1,6 @@
 package com.example.recipes.entity;
 
+import com.example.recipes.annotation.ProductUniqueness;
 import com.example.recipes.enums.ProductUnit;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -8,6 +9,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "products")
+@ProductUniqueness
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

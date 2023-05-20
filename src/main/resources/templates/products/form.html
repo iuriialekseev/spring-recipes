@@ -6,6 +6,7 @@
       th:fragment="form(product, action, method)"
       th:method="${method}"
       th:object="${product}">
+    <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="text-danger"/>
     <div class="mb-3">
         <label for="name">Name</label>
         <input class="form-control w-25"

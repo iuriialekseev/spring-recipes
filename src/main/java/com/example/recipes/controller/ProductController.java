@@ -35,12 +35,16 @@ public class ProductController {
     }
 
     @PostMapping
-    public String create(@Valid Product params, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String create(@Valid Product product,
+                         BindingResult result,
+                         Model model,
+                         RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
-            model.addAttribute("product", params);
+            model.addAttribute("product", product);
+            System.out.println(result.getAllErrors());
             return "products/new";
         }
-        productService.save(params);
+        productService.save(product);
         Flash flash = new Flash(FlashType.SUCCESS, "Created product");
         redirectAttributes.addFlashAttribute("flash", flash);
         return "redirect:/products";
@@ -54,14 +58,18 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public String update(@PathVariable int id, @Valid Product params, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        Product product = productService.findById(id);
+    public String update(@PathVariable int id,
+                         @Valid Product product,
+                         BindingResult result,
+                         Model model,
+                         RedirectAttributes redirectAttributes) {
+        Product editedProduct = productService.findById(id);
         if (result.hasErrors()) {
-            model.addAttribute("product", params);
+            model.addAttribute("product", product);
             return "products/edit";
         }
-        params.setId(product.getId());
-        productService.save(params);
+        product.setId(editedProduct.getId());
+        productService.save(product);
         Flash flash = new Flash(FlashType.SUCCESS, "Updated product");
         redirectAttributes.addFlashAttribute("flash", flash);
         return "redirect:/products";
