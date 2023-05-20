@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20230618224915
+      author: iurii
+      changes:
+        - createTable:
+            tableName: recipe_products
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: recipe_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    references: recipes(id)
+                    foreignKeyName: fk_recipe_products_recipe_id
+              - column:
+                  name: product_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    references: products(id)
+                    foreignKeyName: fk_recipe_products_product_id
+              - column:
+                  name: amount
+                  type: numeric(10, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            columnNames: recipe_id, product_id
+            tableName: recipe_products
+            constraintName: uc_recipe_products_recipe_id_product_id
+        - createIndex:
+            tableName: recipe_products
+            indexName: idx_recipe_products_recipe_id
+            columns:
+              - column:
+                  name: recipe_id
+        - createIndex:
+            tableName: recipe_products
+            indexName: idx_recipe_products_product_id
+            columns:
+              - column:
+                  name: product_id

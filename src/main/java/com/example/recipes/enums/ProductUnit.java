@@ -2,9 +2,7 @@ package com.example.recipes.enums;
 
 public enum ProductUnit {
     GRAM("Gram"),
-    KILOGRAM("Kilogram"),
     MILLILITER("Milliliter"),
-    LITER("Liter"),
     ITEM("Item");
 
     private String displayName;

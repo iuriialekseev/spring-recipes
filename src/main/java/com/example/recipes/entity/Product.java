@@ -4,7 +4,6 @@ import com.example.recipes.annotation.ProductUniqueness;
 import com.example.recipes.enums.ProductUnit;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -19,7 +18,7 @@ public class Product {
     @Size(max = 255)
     private String name;
 
-    @NotNull
+    @NotBlank
     @Enumerated(EnumType.STRING)
     private ProductUnit unit;
 
