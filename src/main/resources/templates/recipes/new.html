@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html th:replace="~{base :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>New recipe</title>
+</head>
+<body>
+<section>
+    <nav th:replace="~{recipes/shared :: nav}"></nav>
+    <p class="h4 mb-4">New recipe</p>
+    <form th:replace="~{recipes/form :: form(${recipe}, @{/recipes}, 'post')}"></form>
+</section>
+</body>
+</html>

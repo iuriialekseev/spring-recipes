@@ -28,7 +28,7 @@ databaseChangeLog:
                     references: products(id)
                     foreignKeyName: fk_recipe_products_product_id
               - column:
-                  name: amount
+                  name: quantity
                   type: numeric(10, 2)
                   constraints:
                     nullable: false

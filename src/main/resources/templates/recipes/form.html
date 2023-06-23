@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<form action="#"
+      th:action="${action}"
+      th:fragment="form(recipe, action, method)"
+      th:method="${method}"
+      th:object="${recipe}">
+    <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="text-danger"/>
+    <div class="mb-3">
+        <label for="name">Name</label>
+        <input class="form-control w-25"
+               id="name"
+               placeholder="Risotto"
+               th:field="*{name}"
+               th:errorclass="is-invalid"
+               type="text"
+        >
+        <div class="invalid-feedback" th:errors="*{name}"></div>
+    </div>
+    <div class="mb-3">
+        <label for="description">Description</label>
+        <textarea class="form-control w-50"
+                  id="description"
+                  rows="5"
+                  name="description"
+                  placeholder="Risotto with mushrooms"
+                  th:field="*{description}">
+        </textarea>
+        <div class="invalid-feedback" th:errors="*{description}"></div>
+    </div>
+    <button class="btn btn-sm btn-success" type="submit">Save</button>
+</form>
+</body>
+</html>

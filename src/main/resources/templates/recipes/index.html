@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html th:replace="~{base :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Recipes</title>
+</head>
+<body>
+<section class="col-12">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Recipes</h4>
+        <a class="btn btn-sm btn-outline-success" th:href="@{/recipes/new}">New recipe</a>
+    </div>
+    <table class="table">
+        <colgroup>
+            <col class="col-2">
+            <col class="col-4">
+            <col class="col-4">
+            <col class="col-2">
+        </colgroup>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="recipe : ${recipes}" th:object="${recipe}">
+            <td th:text="*{id}">Id</td>
+            <td th:text="*{name}">Name</td>
+            <td th:text="*{description}">Description</td>
+            <td>
+                <a class="btn btn-sm btn-primary" th:href="@{/recipes/{id}/edit(id=*{id})}">Edit</a>
+                <form class="d-inline" th:action="@{/recipes/{id}(id=*{id})}" th:method="delete">
+                    <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</section>
+</body>
+</html>
