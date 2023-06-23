@@ -2,33 +2,23 @@ package com.example.recipes.entity;
 
 import com.example.recipes.annotation.ProductUniqueness;
 import com.example.recipes.enums.ProductUnit;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "products")
 @ProductUniqueness
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+public class Product extends BaseEntity {
     @NotBlank
     @Size(max = 255)
     private String name;
 
-    @NotBlank
     @Enumerated(EnumType.STRING)
     private ProductUnit unit;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -49,9 +39,11 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", name='" + name + '\'' +
-                ", unit='" + unit + '\'' +
+                ", unit=" + unit +
+                ", createdDate=" + getCreatedDate() +
+                ", modifiedDate=" + getModifiedDate() +
                 '}';
     }
 }
