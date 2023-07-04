@@ -2,17 +2,22 @@ package com.example.recipes.entity;
 
 import com.example.recipes.annotation.ProductUniqueness;
 import com.example.recipes.enums.ProductUnit;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
 @ProductUniqueness
 public class Product extends BaseEntity {
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Valid
+    private List<RecipeProduct> recipeProducts = new ArrayList<>();
+
     @NotBlank
     @Size(max = 255)
     private String name;
