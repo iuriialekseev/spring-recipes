@@ -3,6 +3,7 @@ package com.example.recipes.controller;
 import com.example.recipes.entity.Recipe;
 import com.example.recipes.enums.FlashType;
 import com.example.recipes.pojo.Flash;
+import com.example.recipes.service.ProductService;
 import com.example.recipes.service.RecipeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/recipes")
 public class RecipeController {
     private final RecipeService recipeService;
+    private final ProductService productService;
 
     @Autowired
-    public RecipeController(RecipeService recipeService) {
+    public RecipeController(RecipeService recipeService, ProductService productService) {
         this.recipeService = recipeService;
+        this.productService = productService;
     }
 
     @GetMapping
@@ -31,20 +34,26 @@ public class RecipeController {
     @GetMapping("/new")
     public String newAction(Model model) {
         model.addAttribute("recipe", new Recipe());
+        model.addAttribute("products", productService.findAll());
         return "recipes/new";
     }
 
     @PostMapping
-    public String create(@Valid Recipe recipe,
+    public String create(@Valid Recipe recipeParams,
                          BindingResult result,
                          Model model,
                          RedirectAttributes redirectAttributes) {
+        recipeParams.getRecipeProducts().removeIf(rp -> rp.getProduct() == null || rp.getQuantity() == null);
         if (result.hasErrors()) {
-            model.addAttribute("recipe", recipe);
+            model.addAttribute("recipe", recipeParams);
+            model.addAttribute("products", productService.findAll());
             System.out.println(result.getAllErrors());
             return "recipes/new";
         }
-        recipeService.save(recipe);
+        recipeParams.getRecipeProducts().forEach(recipeProduct -> {
+            recipeProduct.setRecipe(recipeParams);
+        });
+        recipeService.save(recipeParams);
         Flash flash = new Flash(FlashType.SUCCESS, "Created recipe");
         redirectAttributes.addFlashAttribute("flash", flash);
         return "redirect:/recipes";
@@ -54,22 +63,28 @@ public class RecipeController {
     public String edit(@PathVariable int id, Model model) {
         Recipe recipe = recipeService.findById(id);
         model.addAttribute("recipe", recipe);
+        model.addAttribute("products", productService.findAll());
         return "recipes/edit";
     }
 
     @PutMapping("/{id}")
     public String update(@PathVariable int id,
-                         @Valid Recipe recipe,
+                         @Valid Recipe recipeParams,
                          BindingResult result,
                          Model model,
                          RedirectAttributes redirectAttributes) {
         Recipe editedRecipe = recipeService.findById(id);
+        recipeParams.getRecipeProducts().removeIf(rp -> rp.getProduct() == null || rp.getQuantity() == null);
         if (result.hasErrors()) {
-            model.addAttribute("recipe", recipe);
+            model.addAttribute("recipe", recipeParams);
+            model.addAttribute("products", productService.findAll());
             return "recipes/edit";
         }
-        recipe.setId(editedRecipe.getId());
-        recipeService.save(recipe);
+        recipeParams.setId(editedRecipe.getId());
+        recipeParams.getRecipeProducts().forEach(recipeProduct -> {
+            recipeProduct.setRecipe(recipeParams);
+        });
+        recipeService.save(recipeParams);
         Flash flash = new Flash(FlashType.SUCCESS, "Updated recipe");
         redirectAttributes.addFlashAttribute("flash", flash);
         return "redirect:/recipes";

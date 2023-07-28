@@ -19,4 +19,37 @@ public class RecipeProduct extends BaseEntity {
     private Product product;
 
     private BigDecimal quantity;
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public BigDecimal getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(BigDecimal quantity) {
+        this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "RecipeProduct{" +
+                "recipe=" + recipe +
+                ", product=" + product +
+                ", quantity=" + quantity +
+                '}';
+    }
 }
